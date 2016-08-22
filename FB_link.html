@@ -97,6 +97,12 @@ FB.login(function(response) {
     }
 });
  
+FB.getLoginStatus(function(response) {
+  if (response.status === 'connected') {
+    var accessToken = response.authResponse.accessToken;
+    console.log('Access Token ' + accessToken);
+  } 
+} );
 
 </script>
 
