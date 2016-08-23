@@ -1,3 +1,5 @@
+echo 'hello World';
+<!-- 
 $fb = new Facebook\Facebook([
   'app_id' => '690212971127525',
   'app_secret' => 'd42eda1ce1a1850a0d4f60ea9d45e0b5',
@@ -18,3 +20,4 @@ try {
 $user = $response->getGraphUser();
 
 echo 'Name: ' . $user['name'];
+ -->
