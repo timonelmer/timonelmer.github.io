@@ -1,42 +1,43 @@
+<!DOCTYPE html>
 <html>
+<head>
+<title>Test php</title>
+<meta charset="UTF-8">
+</head>
 <body>
 
-<!-- <p><a href="#" onClick="logInWithFacebook()">Log In with the JavaScript SDK</a></p> -->
+<?php 
 
-<!-- 
-<script>
-  logInWithFacebook = function() {
-    FB.login(function(response) {
-      if (response.authResponse) {
-        alert('You are logged in &amp; cookie set!');
-        // Now you can redirect the user or do an AJAX request to
-        // a PHP script that grabs the signed request from the cookie.
-      } else {
-        alert('User cancelled login or did not fully authorize.');
-      }
-    });
-    return false;
-  };
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId: '690212971127525',
-      cookie: true, // This is important, it's not enabled by default
-      version: 'v2.7'
-    });
-  };
+include 'facebook.php'; 
 
-  (function(d, s, id){
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-</script>
- -->
+$fb = new Facebook\Facebook([
+  'app_id' => '690212971127525',
+  'app_secret' => 'd42eda1ce1a1850a0d4f60ea9d45e0b5',
+  'cookie' => 'true'
+  ]);
 
-<?php include ("example_get.php"); ?>
-<!-- <?php include ("fb-callback.php"); ?> -->
+$session = $facebook->getSession();
+$me = null;
+
+if ($session){
+	//fb query
+	try {
+		$me = $facebook->api('/me');
+	} catch (FacebookApiException $e) {
+		echo $e->getMessage();
+	}
+}
+
+if($me){
+	$logoutUrl = $facebook->getLogoutUrl();
+	echo "<a href='$logoutUrl'>Logout</a>";
+} else {
+	$loginUrl = $facebook->getLoginUrl();
+	echo "<a href='$loginUrl'>Login</a>";
+}
+
+?>
+
 
 </body>
 </html>
